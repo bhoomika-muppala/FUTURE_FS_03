@@ -1,28 +1,44 @@
 // src/app/components/ProductCard.jsx
-import React from "react";
+'use client';
+
+import Image from 'next/image';
+import { useState } from 'react';
+import { useCart } from '../context/CartContext'; // adjust path if needed
 
 export default function ProductCard({ product }) {
+  const { addToCart } = useCart();
+  const [added, setAdded] = useState(false);
+
+  const handleAdd = () => {
+    addToCart(product);
+    setAdded(true);
+    setTimeout(() => setAdded(false), 1400);
+  };
+
+  // Choose a safe image source (null/undefined instead of empty string)
+  const imgSrc = product?.imageURL && product.imageURL.trim() !== '' ? product.imageURL : null;
+  const placeholder = '/assets/hero.jpg'; // small neutral placeholder in public/assets
+
   return (
-    <article className="bg-white rounded-lg shadow-sm overflow-hidden">
-      <div className="p-6">
-        <div className="bg-[#f8f2ec] rounded-md p-4 flex items-center justify-center">
-          {/* Use a plain img tag from public/ assets */}
-          <img
-            src={product.image}
-            alt={product.title}
-            className="w-full h-48 object-contain rounded"
-          />
-        </div>
-
-        <h3 className="mt-4 text-lg font-semibold">{product.title}</h3>
-        <p className="text-green-700 font-bold mt-1">{product.price}</p>
-        <p className="text-sm text-gray-500 mt-3">{product.description}</p>
-
-        <div className="mt-4 flex gap-3">
-          <button className="px-4 py-2 border rounded">More Info</button>
-          <button className="px-4 py-2 bg-green-700 text-white rounded">Add</button>
-        </div>
+    <div className="border rounded-md p-4 flex flex-col">
+      <div className="relative w-full h-48 mb-3 bg-gray-50 rounded">
+        {imgSrc ? (
+          <Image src={imgSrc} alt={product.name} fill style={{ objectFit: 'cover' }} className="rounded" />
+        ) : (
+          // fallback to a placeholder image — safe because src is non-empty
+          <Image src={placeholder} alt="placeholder" fill style={{ objectFit: 'cover' }} className="rounded" />
+        )}
       </div>
-    </article>
+
+      <h3 className="font-medium mb-1">{product.name}</h3>
+      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
+
+      <div className="mt-auto flex items-center justify-between">
+        <div className="font-semibold">₹{product.price}</div>
+        <button onClick={handleAdd} className="px-3 py-1 bg-primary text-white rounded-md">
+          {added ? 'Added' : 'Add'}
+        </button>
+      </div>
+    </div>
   );
 }

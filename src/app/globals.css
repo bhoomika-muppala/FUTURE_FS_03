@@ -1,22 +1,52 @@
-﻿/* top of src/app/globals.css */
-:root {
-  --eco-beige: #F3EADB;
-  --eco-green: #1b7a2a;
-}
+﻿/* src/styles/globals.css */
 
-/* immediate non-tailwind background so you can see changes */
-body {
-  background: var(--eco-beige);
-  color: #0f1724;
-}
+/* Google fonts used: Poppins (heading) + Inter (body) */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&family=Inter:wght@300;400;600&display=swap');
 
-/* Tailwind utilities will still work below (keep your existing Tailwind imports) */
 @tailwind base;
 @tailwind components;
 @tailwind utilities;
 
-/* Add a small custom util if you want (optional) */
-@layer utilities {
-  .text-ecoGreen { color: var(--eco-green); }
-  .bg-ecoBeige { background-color: var(--eco-beige); }
+/* Base page defaults */
+:root {
+  color-scheme: light;
+}
+
+html, body, #__next {
+  height: 100%;
+}
+
+body {
+  @apply bg-white text-dark;
+  font-family: 'Inter', system-ui, -apple-system, 'Segoe UI', Roboto, 'Helvetica Neue', Arial;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+/* Headings use Poppins */
+h1, h2, h3, h4 {
+  font-family: 'Poppins', 'Inter', sans-serif;
+}
+
+/* small helper */
+.typing {
+  display: inline-block;
+  border-right: 2px solid rgba(0,0,0,0.15);
+  padding-right: 6px;
+  animation: blink 1s steps(1) infinite;
+}
+
+@keyframes blink {
+  50% { border-color: transparent; }
+}
+
+/* Utility for small cards / images */
+.card-img {
+  @apply w-full h-48 object-cover rounded-md;
+}
+
+/* Improve anchor focus */
+a:focus {
+  outline: 2px solid rgba(11,107,58,0.25);
+  outline-offset: 2px;
 }

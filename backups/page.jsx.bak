@@ -1,0 +1,103 @@
+﻿// src/app/page.jsx
+"use client";
+
+import React, { useState, useMemo } from "react";
+import { products as allProducts } from "./data/products"; // ensure this file exists and exports `products`
+import ProductsGrid from "./components/ProductsGrid";
+import Hero from "./components/Hero";
+import FilterBar from "./components/FilterBar";
+
+/**
+ * Home page: Search + Sort + ProductsGrid
+ * - Simple, self-contained client page
+ */
+export default function HomePage() {
+  const [query, setQuery] = useState("");
+  const [sort, setSort] = useState("featured"); // featured | price-asc | price-desc
+  const [minPrice, setMinPrice] = useState("");
+  const [maxPrice, setMaxPrice] = useState("");
+
+  // filter + sort
+  const filteredProducts = useMemo(() => {
+    let res = allProducts.slice();
+
+    // search
+    if (query && query.trim()) {
+      const q = query.trim().toLowerCase();
+      res = res.filter(
+        (p) =>
+          p.name.toLowerCase().includes(q) ||
+          (p.description && p.description.toLowerCase().includes(q))
+      );
+    }
+
+    // price range
+    const min = parseFloat(minPrice) || 0;
+    const max = parseFloat(maxPrice) || Infinity;
+    res = res.filter((p) => p.price >= min && p.price <= max);
+
+    // sort
+    if (sort === "price-asc") res.sort((a, b) => a.price - b.price);
+    else if (sort === "price-desc") res.sort((a, b) => b.price - a.price);
+    // else featured: keep source order
+
+    return res;
+  }, [query, sort, minPrice, maxPrice]);
+
+  return (
+    <>
+      {/* Hero banner (component) */}
+      <Hero />
+
+      <section className="max-w-7xl mx-auto px-6 py-10">
+        <h1 className="text-4xl font-extrabold text-slate-900 mb-6">Our Collection</h1>
+
+        {/* FilterBar: can be a small component that shows search, min/max, sort.
+            If you already have FilterBar.jsx, you can keep using it; else the inline controls below work. */}
+        <div className="flex flex-col md:flex-row md:items-center md:justify-between gap-6 mb-8">
+          <div className="flex items-center gap-4">
+            <input
+              type="search"
+              placeholder="Search products..."
+              value={query}
+              onChange={(e) => setQuery(e.target.value)}
+              className="px-4 py-3 rounded-md border border-slate-200 shadow-sm w-64"
+            />
+
+            <input
+              placeholder="Min"
+              value={minPrice}
+              onChange={(e) => setMinPrice(e.target.value)}
+              className="px-3 py-2 rounded-md border border-slate-200 w-20"
+            />
+            <span className="text-gray-400">—</span>
+            <input
+              placeholder="Max"
+              value={maxPrice}
+              onChange={(e) => setMaxPrice(e.target.value)}
+              className="px-3 py-2 rounded-md border border-slate-200 w-20"
+            />
+          </div>
+
+          <div>
+            <label className="sr-only">Sort</label>
+            <select
+              value={sort}
+              onChange={(e) => setSort(e.target.value)}
+              className="px-4 py-3 border rounded-md"
+            >
+              <option value="featured">Featured</option>
+              <option value="price-asc">Price: Low → High</option>
+              <option value="price-desc">Price: High → Low</option>
+            </select>
+          </div>
+        </div>
+
+        {/* Products grid (with framer-motion in ProductsGrid) */}
+        <div className="mt-4">
+          <ProductsGrid products={filteredProducts} />
+        </div>
+      </section>
+    </>
+  );
+}
