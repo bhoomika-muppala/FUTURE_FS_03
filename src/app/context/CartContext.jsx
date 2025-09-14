@@ -1,50 +1,61 @@
 // src/app/context/CartContext.jsx
-'use client';
+"use client";
 
-import { createContext, useContext, useEffect, useState } from 'react';
+import React, { createContext, useContext, useState, useMemo } from "react";
 
 const CartContext = createContext(null);
 
 export function CartProvider({ children }) {
-  const [cart, setCart] = useState([]);
+  const [cart, setCart] = useState([]); // items: { id, name, price, qty, image, size }
 
-  useEffect(() => {
-    try {
-      const raw = localStorage.getItem('cart') || '[]';
-      setCart(JSON.parse(raw));
-    } catch {
-      setCart([]);
-    }
-  }, []);
+  function addToCart(product, qty = 1) {
+    setCart((prev) => {
+      // match by id + size so same product different sizes are separate
+      const found = prev.find((p) => p.id === product.id && p.size === product.size);
+      if (found) {
+        return prev.map((p) =>
+          p.id === product.id && p.size === product.size
+            ? { ...p, qty: (Number(p.qty || 0) + Number(qty || 1)) }
+            : p
+        );
+      }
+      return [...prev, { ...product, qty: Number(qty || 1) }];
+    });
+  }
 
-  useEffect(() => {
-    try {
-      localStorage.setItem('cart', JSON.stringify(cart));
-    } catch {}
+  function removeFromCart(id, size) {
+    setCart((prev) => prev.filter((p) => !(p.id === id && p.size === size)));
+  }
+
+  function updateQty(id, size, qty) {
+    setCart((prev) =>
+      prev
+        .map((p) =>
+          p.id === id && p.size === size ? { ...p, qty: Math.max(0, Number(qty || 0)) } : p
+        )
+        .filter((p) => p.qty > 0)
+    );
+  }
+
+  function clearCart() {
+    setCart([]);
+  }
+
+  const cartTotal = useMemo(() => {
+    return cart.reduce((sum, p) => sum + (Number(p.price || 0) * (Number(p.qty || 1))), 0);
   }, [cart]);
 
-  const addToCart = (product) => {
-    setCart((prev) => {
-      const idx = prev.findIndex((p) => p.id === product.id);
-      if (idx > -1) {
-        const copy = [...prev];
-        copy[idx].qty = (copy[idx].qty || 1) + 1;
-        return copy;
-      }
-      return [...prev, { ...product, qty: 1 }];
-    });
-  };
-
-  const removeFromCart = (id) => setCart((prev) => prev.filter((p) => p.id !== id));
-  const clearCart = () => setCart([]);
-
   return (
-    <CartContext.Provider value={{ cart, addToCart, removeFromCart, clearCart }}>
+    <CartContext.Provider
+      value={{ cart, addToCart, removeFromCart, updateQty, clearCart, cartTotal }}
+    >
       {children}
     </CartContext.Provider>
   );
 }
 
 export function useCart() {
-  return useContext(CartContext);
+  const ctx = useContext(CartContext);
+  if (!ctx) throw new Error("useCart must be used within CartProvider");
+  return ctx;
 }

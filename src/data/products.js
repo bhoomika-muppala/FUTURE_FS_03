@@ -1,60 +1,71 @@
-﻿// src/app/data/products.js
+﻿// src/data/products.js
+// NOTE: file must be exactly at src/data/products.js (or update import paths accordingly)
 
-export const products = [
+const products = [
   {
-    id: 1,
+    id: "cloudstep",
+    name: "CloudStep",
+    price: 3199,
+    image: "/assets/cloudstep.jpg",
+    sizes: [6, 7, 8, 9, 10],
+    description: "Cushioned midsole for softer landings."
+  },
+  {
+    id: "earthstep",
     name: "EarthStep",
     price: 3099,
     image: "/assets/earthstep.jpg",
+    sizes: [6, 7, 8, 9, 10, 11],
     description: "Durable everyday shoe made from earth-friendly materials."
   },
   {
-    id: 2,
-    name: "CloudStep",
-    price: 2799,
-    image: "/assets/cloudstep.jpg",
-    description: "Lightweight comfort with sustainable fabric."
-  },
-  {
-    id: 3,
+    id: "ecorunner",
     name: "EcoRunner",
     price: 3299,
     image: "/assets/ecorunner.jpg",
-    description: "Built for speed and performance with eco-materials."
+    sizes: [6, 7, 8, 9, 10, 11],
+    description: "Daily running shoe with natural cushioning."
   },
   {
-    id: 4,
+    id: "forestflex",
     name: "ForestFlex",
     price: 3999,
     image: "/assets/forestflex.jpg",
-    description: "Inspired by nature, designed for flexibility."
+    sizes: [6, 7, 8, 9, 10],
+    description: "Flexible sole and recycled upper."
   },
   {
-    id: 5,
+    id: "greenstride",
     name: "GreenStride",
-    price: 2899,
+    price: 3299,
     image: "/assets/greenstride.jpg",
-    description: "Perfect balance of comfort and sustainability."
+    sizes: [6, 7, 8, 9, 10],
+    description: "Fresh eco look with comfort."
   },
   {
-    id: 6,
+    id: "naturewalk",
     name: "NatureWalk",
     price: 3599,
     image: "/assets/naturewalk.jpg",
-    description: "Rugged outsole for weekend adventures."
+    sizes: [6, 7, 8, 9, 10, 11],
+    description: "Perfect companion for natural trails."
   },
   {
-    id: 7,
+    id: "urbanleaf",
     name: "UrbanLeaf",
-    price: 3199,
+    price: 3499,
     image: "/assets/urbanleaf.jpg",
-    description: "Street-style sneakers with an eco-twist."
+    sizes: [6, 7, 8, 9, 10],
+    description: "Eco-friendly streetwear shoe."
   },
   {
-    id: 8,
+    id: "sustainrun",
     name: "SustainRun",
-    price: 3399,
+    price: 3299,
     image: "/assets/sustainrun.jpg",
-    description: "Sustainable design for long-distance runs."
+    sizes: [6, 7, 8, 9, 10],
+    description: "Light, durable, and sustainable."
   }
 ];
+
+export default products;

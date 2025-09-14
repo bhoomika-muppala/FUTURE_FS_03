@@ -1,23 +1,27 @@
 // src/app/components/Header.jsx
+"use client";
+
+import React from "react";
 import Link from "next/link";
 import CartBadge from "./CartBadge";
 
 export default function Header() {
   return (
-    <header className="sticky top-0 z-50 bg-white/95 backdrop-blur-sm border-b border-transparent shadow-sm">
-      <div className="max-w-7xl mx-auto px-6 py-4 flex items-center justify-between">
-        <Link href="/" className="text-2xl font-extrabold text-emerald-700">
-          EcoStride
-        </Link>
+    <header className="sticky top-0 z-40 bg-white border-b">
+      <div className="max-w-6xl mx-auto px-6 py-4 flex items-center justify-between">
+        <div className="flex items-center gap-10">
+          <Link href="/" className="text-xl font-bold">eco-stride</Link>
+          <nav className="hidden md:flex gap-6">
+            <Link href="/shop" className="text-sm">Shop</Link>
+            <Link href="/about" className="text-sm">About</Link>
+            <Link href="/contact" className="text-sm">Contact</Link>
+          </nav>
+        </div>
 
-        <nav className="flex items-center gap-6">
-          <Link href="/" className="text-sm text-gray-700 hover:text-gray-900">Home</Link>
-          <Link href="/shop" className="text-sm text-gray-700 hover:text-gray-900">Shop</Link>
-          <Link href="/about" className="text-sm text-gray-700 hover:text-gray-900">About</Link>
-          <Link href="/contact" className="text-sm text-gray-700 hover:text-gray-900">Contact</Link>
-
-          <CartBadge />
-        </nav>
+        <div className="flex items-center gap-4">
+          <Link href="/" className="text-sm">Home</Link>
+          <div><CartBadge /></div>
+        </div>
       </div>
     </header>
   );

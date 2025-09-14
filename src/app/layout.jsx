@@ -1,21 +1,21 @@
-﻿import "./globals.css";
-import Navbar from "./components/Navbar";
-import Footer from "./components/Footer";
+﻿// src/app/layout.jsx
+import "./globals.css";
+import React from "react";
 import { CartProvider } from "./context/CartContext";
-
-export const metadata = {
-  title: "EcoStride",
-  description: "EcoStride — sustainable footwear",
-};
+import ToastProvider from "./context/ToastContext";
+import Header from "./components/Header";
+import Footer from "./components/Footer"; // if you have it
 
 export default function RootLayout({ children }) {
   return (
     <html lang="en">
       <body>
         <CartProvider>
-          <Navbar />
-          <main>{children}</main>
-          <Footer />
+          <ToastProvider>
+            <Header />
+            <main>{children}</main>
+            {Footer && <Footer />}
+          </ToastProvider>
         </CartProvider>
       </body>
     </html>

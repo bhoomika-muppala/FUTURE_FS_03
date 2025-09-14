@@ -1,43 +1,72 @@
-// src/app/components/ProductCard.jsx
-'use client';
+﻿// src/app/components/ProductCard.jsx
+"use client";
 
-import Image from 'next/image';
-import { useState } from 'react';
-import { useCart } from '../context/CartContext'; // adjust path if needed
+import React from "react";
+import Image from "next/image";
+import Link from "next/link";
+import { useCart } from "../context/CartContext";
 
 export default function ProductCard({ product }) {
   const { addToCart } = useCart();
-  const [added, setAdded] = useState(false);
+  const [size, setSize] = React.useState("");
+  const [error, setError] = React.useState("");
+
+  // available sizes — change as you like
+  const sizes = ["6", "7", "8", "9", "10", "11"];
 
   const handleAdd = () => {
-    addToCart(product);
-    setAdded(true);
-    setTimeout(() => setAdded(false), 1400);
+    if (!size) {
+      setError("Please select a size");
+      return;
+    }
+    setError("");
+    // pass chosen size inside product object
+    addToCart({ ...product, size }, 1);
   };
 
-  // Choose a safe image source (null/undefined instead of empty string)
-  const imgSrc = product?.imageURL && product.imageURL.trim() !== '' ? product.imageURL : null;
-  const placeholder = '/assets/hero.jpg'; // small neutral placeholder in public/assets
-
   return (
-    <div className="border rounded-md p-4 flex flex-col">
-      <div className="relative w-full h-48 mb-3 bg-gray-50 rounded">
-        {imgSrc ? (
-          <Image src={imgSrc} alt={product.name} fill style={{ objectFit: 'cover' }} className="rounded" />
-        ) : (
-          // fallback to a placeholder image — safe because src is non-empty
-          <Image src={placeholder} alt="placeholder" fill style={{ objectFit: 'cover' }} className="rounded" />
-        )}
+    <div className="border rounded-lg shadow-md p-4 bg-white flex flex-col">
+      <div className="flex-1">
+        <Image
+          src={product.image}
+          alt={product.name}
+          width={420}
+          height={300}
+          className="rounded object-cover w-full h-48"
+        />
+        <h3 className="font-semibold mt-4 text-lg">{product.name}</h3>
+        <p className="text-sm text-gray-600 mt-1">{product.description}</p>
+        <div className="mt-3 font-bold">₹{product.price}</div>
+
+        <label className="block mt-4 text-sm text-gray-700">Size</label>
+        <select
+          value={size}
+          onChange={(e) => {
+            setSize(e.target.value);
+            setError("");
+          }}
+          className="mt-1 block w-full border rounded px-3 py-2"
+        >
+          <option value="">Select size</option>
+          {sizes.map((s) => (
+            <option key={s} value={s}>
+              {s}
+            </option>
+          ))}
+        </select>
+        {error && <div className="mt-1 text-sm text-red-600">{error}</div>}
       </div>
 
-      <h3 className="font-medium mb-1">{product.name}</h3>
-      <p className="text-sm text-gray-600 mb-3 line-clamp-2">{product.description}</p>
-
-      <div className="mt-auto flex items-center justify-between">
-        <div className="font-semibold">₹{product.price}</div>
-        <button onClick={handleAdd} className="px-3 py-1 bg-primary text-white rounded-md">
-          {added ? 'Added' : 'Add'}
+      <div className="mt-4 flex gap-3">
+        <button
+          onClick={handleAdd}
+          className="bg-emerald-600 hover:bg-emerald-700 text-white px-4 py-2 rounded"
+        >
+          Add to cart
         </button>
+        <Link href={`/shop/${product.id}`} className="inline-block">
+          <button className="border px-4 py-2 rounded bg-white">View</button>
+        </Link>
       </div>
     </div>
   );

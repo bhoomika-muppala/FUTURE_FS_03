@@ -1,15 +1,12 @@
-import React from 'react';
+// src/app/components/Footer.jsx
+import React from "react";
 
-export default function Footer(){
+export default function Footer() {
   return (
-    <footer className="bg-neutral mt-12 text-sm">
-      <div className="max-w-6xl mx-auto px-4 sm:px-6 lg:px-8 py-6 flex flex-col md:flex-row justify-between items-center gap-4">
-        <div>© {new Date().getFullYear()} EcoStride. All rights reserved.</div>
-        <div className="space-x-4">
-          <a href="#" className="hover:text-primary">Privacy</a>
-          <a href="#" className="hover:text-primary">Terms</a>
-        </div>
+    <footer className="border-t mt-12 bg-white">
+      <div className="max-w-6xl mx-auto px-4 py-6 text-center text-sm text-gray-600">
+        © {new Date().getFullYear()} Eco Stride — Built with ♥
       </div>
     </footer>
-  )
+  );
 }
