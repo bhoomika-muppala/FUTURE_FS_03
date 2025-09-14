@@ -6,11 +6,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import DownloadReceiptButton from "./DownloadReceiptButton";
 
 /**
- * CheckoutCompletePage — Client component version.
- * Replaces any dynamic(...) + ssr:false approach so the page builds on Vercel.
- *
- * This file intentionally runs on the client (useSearchParams / useRouter).
- * Make sure there is NO dynamic(..., { ssr: false }) referencing this file.
+ * CheckoutCompletePage — Client component (no next/dynamic here)
+ * This must be a client component because it uses useSearchParams / useRouter.
  */
 
 export default function CheckoutCompletePage() {
@@ -76,7 +73,7 @@ export default function CheckoutCompletePage() {
             >
               Continue shopping
             </button>
-            {/* admin/orders link removed from UI here so orders aren't publicly discoverable */}
+            {/* intentionally no "View all orders" link here (secure) */}
           </div>
         </div>
       </header>
@@ -125,7 +122,10 @@ export default function CheckoutCompletePage() {
                             className="flex justify-between items-center bg-gray-50 rounded p-3"
                           >
                             <div>
-                              <div className="font-medium">{it.name}{it.size ? ` — size ${it.size}` : ""}</div>
+                              <div className="font-medium">
+                                {it.name}
+                                {it.size ? ` — size ${it.size}` : ""}
+                              </div>
                               <div className="text-sm text-gray-500">Qty: {it.qty}</div>
                             </div>
                             <div className="text-right">
