@@ -6,8 +6,8 @@ import { useSearchParams, useRouter } from "next/navigation";
 import DownloadReceiptButton from "./DownloadReceiptButton";
 
 /**
- * CheckoutCompletePage — Client component (no next/dynamic here)
- * This must be a client component because it uses useSearchParams / useRouter.
+ * CheckoutCompletePage — client component (uses useSearchParams / useRouter).
+ * This file must NOT use next/dynamic or ssr:false anywhere.
  */
 
 export default function CheckoutCompletePage() {
@@ -73,7 +73,7 @@ export default function CheckoutCompletePage() {
             >
               Continue shopping
             </button>
-            {/* intentionally no "View all orders" link here (secure) */}
+            {/* intentionally no public "View all orders" button here */}
           </div>
         </div>
       </header>
