@@ -1,17 +1,12 @@
 // src/app/checkout/complete/page.jsx
-import React, { Suspense } from "react";
 import dynamic from "next/dynamic";
 
-// dynamic import the client component and disable SSR so Next won't try to prerender it
+// Client component (will only run in the browser)
 const CheckoutCompleteClient = dynamic(
   () => import("./CheckoutCompleteClient"),
-  { ssr: false }
+  { ssr: false } // ensure client-only, avoid prerender issues
 );
 
 export default function CheckoutCompletePage() {
-  return (
-    <Suspense fallback={<div className="p-8">Loading receipt...</div>}>
-      <CheckoutCompleteClient />
-    </Suspense>
-  );
+  return <CheckoutCompleteClient />;
 }
