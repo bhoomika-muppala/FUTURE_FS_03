@@ -5,20 +5,20 @@ This is part of my **Full Stack Web Development journey** 🚀.
 
 ---
 
-## 🌍 Live Demo  
+## 🌍 Live Demo
 🔗 [Click here to view the website](https://future-fs-03-xi.vercel.app)
 
 ---
 
-## 📸 Preview  
+## 📸 Preview
 
-### 🏠 Home Page  
+### 🏠 Home Page
 ![Home](public/assets/screenshots/home.png)
 
-### 🛍️ Shop Page  
+### 🛍️ Shop Page
 ![Shop](public/assets/screenshots/shop.png)
 
-### ✅ Checkout Success  
+### ✅ Checkout Success
 ![Checkout](public/assets/screenshots/checkout.png)
 
 ---
@@ -48,7 +48,7 @@ This is part of my **Full Stack Web Development journey** 🚀.
 
 ---
 
-## 🔥 Firebase Integration  
+## 🔥 Firebase Integration
 
 All order details are stored in **Cloud Firestore**.  
 When a user completes checkout, their order is automatically saved in the `orders` collection.
