@@ -64,19 +64,3 @@ When a user completes checkout, their order is automatically saved in the `order
   "total": 3299
 }    
 
-```
-🚀 Deployment
-
-This project is continuously deployed on Vercel.
-Every push to the main branch triggers a new production deployment automatically.
-
-🔗 Production Deployment
-
-🤝 Contributing
-
-Pull requests are welcome!
-For major changes, please open an issue first to discuss what you’d like to change.
-
-👩‍💻 Author
-
-Built with ❤️ by Bhoomika Muppala
