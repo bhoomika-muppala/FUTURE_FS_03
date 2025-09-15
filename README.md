@@ -5,20 +5,20 @@ This is part of my **Full Stack Web Development journey** 🚀.
 
 ---
 
-## 🌍 Live Demo
+## 🌍 Live Demo  
 🔗 [Click here to view the website](https://future-fs-03-xi.vercel.app)
 
 ---
 
-## 📸 Preview
+## 📸 Preview  
 
-### 🏠 Home Page
+### 🏠 Home Page  
 ![Home](public/assets/screenshots/home.png)
 
-### 🛍️ Shop Page
+### 🛍️ Shop Page  
 ![Shop](public/assets/screenshots/shop.png)
 
-### ✅ Checkout Success
+### ✅ Checkout Success  
 ![Checkout](public/assets/screenshots/checkout.png)
 
 ---
@@ -48,7 +48,7 @@ This is part of my **Full Stack Web Development journey** 🚀.
 
 ---
 
-## 🔥 Firebase Integration
+## 🔥 Firebase Integration  
 
 All order details are stored in **Cloud Firestore**.  
 When a user completes checkout, their order is automatically saved in the `orders` collection.
@@ -63,24 +63,18 @@ When a user completes checkout, their order is automatically saved in the `order
   "customer": "Muppala Jithendra Varma Raju",
   "total": 3299
 }
----
+🚀 Deployment
 
-## 🚀 Deployment
+This project is continuously deployed on Vercel.
+Every push to the main branch triggers a new production deployment automatically.
 
-This project is continuously deployed on Vercel.  
-Every push to `main` branch triggers a new production deployment automatically.
+🔗 Production Deployment
 
-🔗 **[Production Deployment](https://future-fs-03-xi.vercel.app)**
+🤝 Contributing
 
----
-
-## 🤝 Contributing
-
-Pull requests are welcome!  
+Pull requests are welcome!
 For major changes, please open an issue first to discuss what you’d like to change.
 
----
+👩‍💻 Author
 
-## 👩‍💻 Author
-
-Built with ❤️ by [Bhoomika Muppala](https://github.com/bhoomika-muppala)
+Built with ❤️ by Bhoomika Muppala
