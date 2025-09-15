@@ -62,9 +62,7 @@ When a user completes checkout, their order is automatically saved in the `order
   "size": "8",
   "customer": "Muppala Jithendra Varma Raju",
   "total": 3299
-}  
-    
-    
+}    
 🚀 Deployment
 
 This project is continuously deployed on Vercel.
