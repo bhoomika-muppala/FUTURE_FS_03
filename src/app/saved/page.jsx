@@ -1,36 +1,52 @@
 // src/app/saved/page.jsx
 "use client";
 
-import { useCart } from "../context/CartContext";
+import React from "react";
+
+/**
+ * Saved page (client component)
+ * - Reads saved items from localStorage (browser) and renders them.
+ * - Keeps server-side build from failing by preventing any access to localStorage outside useEffect.
+ */
 
 export default function SavedPage() {
-  const { saved, clearSaved } = useCart();
+  const [items, setItems] = React.useState(null);
+  const [loading, setLoading] = React.useState(true);
 
-  if (!saved.length) {
-    return (
-      <div className="max-w-4xl mx-auto px-6 py-12">
-        <h2 className="text-2xl font-semibold mb-4">Saved Items</h2>
-        <p className="text-gray-600">No saved items yet.</p>
-      </div>
-    );
-  }
+  React.useEffect(() => {
+    try {
+      const raw = localStorage.getItem("savedItems") || "[]";
+      const parsed = JSON.parse(raw);
+      setItems(Array.isArray(parsed) ? parsed : []);
+    } catch (err) {
+      console.error("failed to read savedItems:", err);
+      setItems([]);
+    } finally {
+      setLoading(false);
+    }
+  }, []);
 
   return (
-    <div className="max-w-4xl mx-auto px-6 py-12">
-      <h2 className="text-2xl font-semibold mb-6">Saved for Later</h2>
-      <ul className="space-y-4">
-        {saved.map((item, idx) => (
-          <li key={idx} className="border rounded-lg p-4 flex justify-between">
-            <span>{item.name} – ₹{item.price}</span>
-          </li>
-        ))}
-      </ul>
-      <button
-        onClick={clearSaved}
-        className="mt-6 px-6 py-3 bg-red-600 text-white rounded-md hover:bg-red-700"
-      >
-        Clear Saved
-      </button>
-    </div>
+    <main className="max-w-4xl mx-auto p-6">
+      <h1 className="text-2xl font-semibold mb-4">Saved items</h1>
+
+      {loading && <div className="text-gray-600">Loading saved items…</div>}
+
+      {!loading && (!items || items.length === 0) && (
+        <div className="text-gray-600">No saved items found.</div>
+      )}
+
+      {!loading && items && items.length > 0 && (
+        <div className="space-y-4">
+          {items.map((it, i) => (
+            <div key={i} className="p-4 border rounded bg-white">
+              <div className="font-medium">{it.name || "Unnamed item"}</div>
+              {it.description && <div className="text-sm text-gray-600">{it.description}</div>}
+              <div className="mt-2 text-sm text-gray-500">Price: ₹{it.price ?? "N/A"}</div>
+            </div>
+          ))}
+        </div>
+      )}
+    </main>
   );
 }
